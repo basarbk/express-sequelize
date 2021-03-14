@@ -13,6 +13,11 @@ app.post('/users', async (req, res) => {
   res.send("success");
 })
 
+app.get('/users', async (req, res) => {
+  const users = await User.findAll();
+  res.send(users);
+})
+
 app.listen(3000, () => {
   console.log("app is running");
 });
