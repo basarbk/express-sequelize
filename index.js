@@ -32,6 +32,12 @@ app.put('/users/:id', async (req, res) => {
   res.send('updated');
 })
 
+app.delete('/users/:id', async (req, res) => {
+  const id = req.params.id;
+  await User.destroy({where: {id: id}});
+  res.send('removed');
+})
+
 app.listen(3000, () => {
   console.log("app is running");
 });
