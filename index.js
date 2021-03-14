@@ -24,6 +24,14 @@ app.get('/users/:id', async (req, res) => {
   res.send(user);
 })
 
+app.put('/users/:id', async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findOne({where: {id: id}});
+  user.username = req.body.username;
+  await user.save();
+  res.send('updated');
+})
+
 app.listen(3000, () => {
   console.log("app is running");
 });
