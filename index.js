@@ -18,6 +18,12 @@ app.get('/users', async (req, res) => {
   res.send(users);
 })
 
+app.get('/users/:id', async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findOne({where: {id: id}});
+  res.send(user);
+})
+
 app.listen(3000, () => {
   console.log("app is running");
 });
