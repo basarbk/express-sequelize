@@ -2,16 +2,15 @@ const express = require("express");
 const sequelize = require('./database');
 const User = require('./User');
 
-sequelize.sync().then(() => console.log('db is ready'));
+sequelize.sync({ force: true }).then(() => console.log('db is ready'));
 
 const app = express();
 
 app.use(express.json());
 
-app.post('/users', (req, res) => {
-  User.create(req.body).then(() => {
-    res.send("success")
-  })
+app.post('/users', async (req, res) => {
+  await User.create(req.body);
+  res.send("success");
 })
 
 app.listen(3000, () => {
