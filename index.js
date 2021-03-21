@@ -2,7 +2,16 @@ const express = require("express");
 const sequelize = require('./database');
 const User = require('./User');
 
-sequelize.sync({ force: true }).then(() => console.log('db is ready'));
+sequelize.sync({ force: true }).then(async () => {
+  for(let i = 1; i <= 25; i++){
+    const user = {
+      username: `user${i}`,
+      email: `user${i}@mail.com`,
+      password: 'P4ssword'
+    }
+    await User.create(user);
+  }
+});
 
 const app = express();
 
