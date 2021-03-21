@@ -24,7 +24,8 @@ app.post('/users', async (req, res) => {
 
 app.get('/users', async (req, res) => {
   const usersWithCount = await User.findAndCountAll({
-    limit: 5
+    limit: 5,
+    offset: 10
   });
   res.send(usersWithCount);
 })
