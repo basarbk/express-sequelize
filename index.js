@@ -28,7 +28,10 @@ app.get('/users', async (req, res) => {
     limit: size,
     offset: page * size
   });
-  res.send(usersWithCount);
+  res.send({
+    content: usersWithCount.rows,
+    totalPages: Math.ceil(usersWithCount.count / Number.parseInt(size))
+  });
 })
 
 app.get('/users/:id', async (req, res) => {
