@@ -23,9 +23,10 @@ app.post('/users', async (req, res) => {
 })
 
 app.get('/users', async (req, res) => {
+  const { page, size } = req.query;
   const usersWithCount = await User.findAndCountAll({
-    limit: 5,
-    offset: 10
+    limit: size,
+    offset: page * size
   });
   res.send(usersWithCount);
 })
