@@ -23,8 +23,8 @@ app.post('/users', async (req, res) => {
 })
 
 app.get('/users', async (req, res) => {
-  const users = await User.findAll();
-  res.send(users);
+  const usersWithCount = await User.findAndCountAll();
+  res.send(usersWithCount);
 })
 
 app.get('/users/:id', async (req, res) => {
