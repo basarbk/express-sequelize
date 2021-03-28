@@ -46,13 +46,13 @@ app.get('/users', async (req, res) => {
   });
 })
 
-app.get('/users/:id', (req, res) => {
+app.get('/users/:id', async (req, res, next) => {
   const id = Number.parseInt(req.params.id);
   if (Number.isNaN(id)) {
-    throw new Error("Invalid id");
+    next(new Error("Invalid id"));
   }
-  // const user = await User.findOne({where: {id: id}});
-  // res.send(user);
+  const user = await User.findOne({where: {id: id}});
+  res.send(user);
 })
 
 app.put('/users/:id', async (req, res) => {
