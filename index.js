@@ -47,7 +47,10 @@ app.get('/users', async (req, res) => {
 })
 
 app.get('/users/:id', async (req, res) => {
-  const id = req.params.id;
+  const id = Number.parseInt(req.params.id);
+  if (Number.isNaN(id)) {
+    return res.status(400).send({ message: "Invalid id" });
+  }
   const user = await User.findOne({where: {id: id}});
   res.send(user);
 })
