@@ -46,13 +46,13 @@ app.get('/users', async (req, res) => {
   });
 })
 
-app.get('/users/:id', async (req, res) => {
+app.get('/users/:id', (req, res) => {
   const id = Number.parseInt(req.params.id);
   if (Number.isNaN(id)) {
-    return res.status(400).send({ message: "Invalid id" });
+    throw new Error("Invalid id");
   }
-  const user = await User.findOne({where: {id: id}});
-  res.send(user);
+  // const user = await User.findOne({where: {id: id}});
+  // res.send(user);
 })
 
 app.put('/users/:id', async (req, res) => {
@@ -67,6 +67,10 @@ app.delete('/users/:id', async (req, res) => {
   const id = req.params.id;
   await User.destroy({where: {id: id}});
   res.send('removed');
+})
+
+app.use((err, req, res, next) => {
+  res.status(400).send({message: err.message});
 })
 
 app.listen(3000, () => {
