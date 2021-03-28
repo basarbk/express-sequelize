@@ -83,7 +83,14 @@ app.delete('/users/:id', async (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  res.status(err.status).send({message: err.message});
+  res
+    .status(err.status)
+    .send(
+      {
+        message: err.message,
+        timestamp: Date.now(),
+        path: req.originalUrl
+      });
 })
 
 app.listen(3000, () => {
