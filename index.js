@@ -52,6 +52,9 @@ app.get('/users/:id', async (req, res, next) => {
     next(new Error("Invalid id"));
   }
   const user = await User.findOne({where: {id: id}});
+  if(!user) {
+    next(new Error("User not found"));
+  }
   res.send(user);
 })
 
