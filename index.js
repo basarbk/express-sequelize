@@ -1,15 +1,20 @@
 const express = require("express");
 const sequelize = require('./database');
 const User = require('./User');
+const Article = require('./Article');
 
 sequelize.sync({ force: true }).then(async () => {
-  for(let i = 1; i <= 5; i++){
+  for(let i = 1; i <= 15; i++){
     const user = {
       username: `user${i}`,
       email: `user${i}@mail.com`,
       password: 'P4ssword'
     }
     await User.create(user);
+    const article = {
+      content: `article content ${i}`
+    }
+    await Article.create(article);
   }
 });
 
@@ -22,7 +27,7 @@ app.post('/users', async (req, res) => {
   res.send("success");
 })
 
-app.get('/users', async (req, res) => {
+const pagination = (req, res, next) => {
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
 
@@ -35,6 +40,14 @@ app.get('/users', async (req, res) => {
   if(!Number.isNaN(sizeAsNumber) && !(sizeAsNumber > 10) && !(sizeAsNumber < 1)){
     size = sizeAsNumber;
   }
+  req.pagination = {
+    page, size
+  }
+  next();
+}
+
+app.get('/users', pagination, async (req, res) => {
+  const { page, size } = req.pagination;
 
   const usersWithCount = await User.findAndCountAll({
     limit: size,
@@ -43,6 +56,20 @@ app.get('/users', async (req, res) => {
   res.send({
     content: usersWithCount.rows,
     totalPages: Math.ceil(usersWithCount.count / Number.parseInt(size))
+  });
+})
+
+
+app.get('/articles', pagination, async (req, res) => {
+  const { page, size } = req.pagination;
+
+  const articleWithCount = await Article.findAndCountAll({
+    limit: size,
+    offset: page * size
+  });
+  res.send({
+    content: articleWithCount.rows,
+    totalPages: Math.ceil(articleWithCount.count / Number.parseInt(size))
   });
 })
 
