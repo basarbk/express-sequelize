@@ -56,11 +56,15 @@ function UserNotFoundException(){
   this.message = 'User not found';
 }
 
-app.get('/users/:id', async (req, res, next) => {
+const idNumberControl = (req, res, next) => {
   const id = Number.parseInt(req.params.id);
   if (Number.isNaN(id)) {
     next(new InvalidIdException());
   }
+}
+
+app.get('/users/:id', idNumberControl, async (req, res, next) => {
+  const id = req.params.id;
   const user = await User.findOne({where: {id: id}});
   if(!user) {
     next(new UserNotFoundException());
@@ -68,7 +72,7 @@ app.get('/users/:id', async (req, res, next) => {
   res.send(user);
 })
 
-app.put('/users/:id', async (req, res) => {
+app.put('/users/:id', idNumberControl, async (req, res) => {
   const id = req.params.id;
   const user = await User.findOne({where: {id: id}});
   user.username = req.body.username;
@@ -76,7 +80,7 @@ app.put('/users/:id', async (req, res) => {
   res.send('updated');
 })
 
-app.delete('/users/:id', async (req, res) => {
+app.delete('/users/:id', idNumberControl, async (req, res) => {
   const id = req.params.id;
   await User.destroy({where: {id: id}});
   res.send('removed');
