@@ -61,6 +61,7 @@ const idNumberControl = (req, res, next) => {
   if (Number.isNaN(id)) {
     throw new InvalidIdException();
   }
+  next();
 }
 
 app.get('/users/:id', idNumberControl, async (req, res, next) => {
