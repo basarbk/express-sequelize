@@ -22,6 +22,13 @@ const app = express();
 
 app.use(express.json());
 
+const thisWillRunInEveryRequest = (req, res, next) => {
+  console.log('running the middleware for', req.method, req.originalUrl);
+  next();
+}
+
+app.use(thisWillRunInEveryRequest);
+
 app.post('/users', async (req, res) => {
   await User.create(req.body);
   res.send("success");
