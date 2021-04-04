@@ -59,7 +59,7 @@ function UserNotFoundException(){
 const idNumberControl = (req, res, next) => {
   const id = Number.parseInt(req.params.id);
   if (Number.isNaN(id)) {
-    next(new InvalidIdException());
+    throw new InvalidIdException();
   }
 }
 
