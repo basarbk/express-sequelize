@@ -7,7 +7,10 @@ const idNumberControl = require('../shared/idNumberControl');
 const UserService = require('./UserService');
 const { body, validationResult } = require('express-validator');
 
-router.post('/users', body('username').notEmpty().withMessage('Username cannot be null'), async (req, res) => {
+router.post('/users', 
+body('username').notEmpty().withMessage('Username cannot be null'),
+body('email').isEmail().withMessage('Must be a valid e-mail address'),
+async (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()){
     return res.status(400).send(errors.array());
