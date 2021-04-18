@@ -26,8 +26,13 @@ const getUser = async (id) => {
   return user;
 }
 
+const findByEmail = async (email) => {
+  return await User.findOne({where: {email: email}});
+}
+
 module.exports = {
   create,
   getUsers,
-  getUser
+  getUser,
+  findByEmail
 }
