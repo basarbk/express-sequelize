@@ -7,11 +7,11 @@ const idNumberControl = require('../shared/idNumberControl');
 const UserService = require('./UserService');
 const { body, validationResult } = require('express-validator');
 
-router.post('/users', body('username').notEmpty(), async (req, res) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-      return res.send(errors.array());
-    }
+router.post('/users', body('username').notEmpty().withMessage('Username cannot be null'), async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.status(400).send(errors.array());
+  }
   await UserService.create(req.body);
   res.send("success");
 })
