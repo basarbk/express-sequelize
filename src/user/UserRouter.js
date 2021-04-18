@@ -6,6 +6,7 @@ const pagination = require('../shared/pagination');
 const idNumberControl = require('../shared/idNumberControl');
 const UserService = require('./UserService');
 const { body, validationResult } = require('express-validator');
+const ValidationException = require('../shared/ValidationException');
 
 router.post('/users', 
 body('username')
@@ -22,10 +23,10 @@ body('email')
     }
   })
   ,
-async (req, res) => {
+async (req, res, next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(400).send(errors.array());
+    return next(new ValidationException(errors.array()));
   }
   await UserService.create(req.body);
   res.send("success");
