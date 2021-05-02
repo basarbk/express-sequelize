@@ -13,26 +13,24 @@ const getUsers = async (pagination) => {
 
   const usersWithCount = await User.findAndCountAll({
     limit: size,
-    offset: page * size
+    offset: page * size,
+    attributes: ['id', 'username', 'email']
   });
   return {
-    content: usersWithCount.rows.map((user) => {
-      const userAsJSON = user.get();
-      delete userAsJSON.password;
-      return userAsJSON;
-    }),
+    content: usersWithCount.rows,
     totalPages: Math.ceil(usersWithCount.count / Number.parseInt(size))
   };
 }
 
 const getUser = async (id) => {
-  const user = await User.findOne({where: {id: id}});
+  const user = await User.findOne({
+    where: {id: id},
+    attributes: ['id', 'username', 'email']
+  });
   if(!user) {
     throw new UserNotFoundException();
   }
-  const userAsJSON = user.get();
-  delete userAsJSON.password;
-  return userAsJSON;
+  return user;
 }
 
 const findByEmail = async (email) => {
