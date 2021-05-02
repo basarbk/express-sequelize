@@ -16,7 +16,11 @@ const getUsers = async (pagination) => {
     offset: page * size
   });
   return {
-    content: usersWithCount.rows,
+    content: usersWithCount.rows.map((user) => {
+      const userAsJSON = user.get();
+      delete userAsJSON.password;
+      return userAsJSON;
+    }),
     totalPages: Math.ceil(usersWithCount.count / Number.parseInt(size))
   };
 }
@@ -26,7 +30,9 @@ const getUser = async (id) => {
   if(!user) {
     throw new UserNotFoundException();
   }
-  return user;
+  const userAsJSON = user.get();
+  delete userAsJSON.password;
+  return userAsJSON;
 }
 
 const findByEmail = async (email) => {
