@@ -1,5 +1,6 @@
 {
   "user_create_success": "Kullanıcı oluşturuldu",
   "user_not_found_exception": "Kullanıcı bulunamadı",
-  "invalid_id_exception": "Geçersiz tanımlayıcı"
+  "invalid_id_exception": "Geçersiz tanımlayıcı",
+  "validation_exception": "Geçersiz talep"
 }
