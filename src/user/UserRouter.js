@@ -29,7 +29,7 @@ async (req, res, next) => {
     return next(new ValidationException(errors.array()));
   }
   await UserService.create(req.body);
-  res.send("success");
+  res.send({message: req.t("user_create_success")});
 })
 
 router.get('/users', pagination, async (req, res) => {
