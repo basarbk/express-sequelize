@@ -1,3 +1,4 @@
 {
-  "user_create_success": "User is created"
+  "user_create_success": "User is created",
+  "user_not_found_exception": "User not found"
 }

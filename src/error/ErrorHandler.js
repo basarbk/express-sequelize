@@ -9,7 +9,7 @@ module.exports = (err, req, res, next) => {
     .status(status)
     .send(
       {
-        message: message,
+        message: req.t(message),
         timestamp: Date.now(),
         path: req.originalUrl,
         validationErrors

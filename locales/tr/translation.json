@@ -1,3 +1,4 @@
 {
-  "user_create_success": "Kullanıcı oluşturuldu"
+  "user_create_success": "Kullanıcı oluşturuldu",
+  "user_not_found_exception": "Kullanıcı bulunamadı"
 }
