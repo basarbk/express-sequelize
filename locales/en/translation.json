@@ -1,4 +1,5 @@
 {
   "user_create_success": "User is created",
-  "user_not_found_exception": "User not found"
+  "user_not_found_exception": "User not found",
+  "invalid_id_exception": "Invalid Identifier"
 }
