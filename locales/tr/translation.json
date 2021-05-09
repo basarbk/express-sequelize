@@ -2,5 +2,9 @@
   "user_create_success": "Kullanıcı oluşturuldu",
   "user_not_found_exception": "Kullanıcı bulunamadı",
   "invalid_id_exception": "Geçersiz tanımlayıcı",
-  "validation_exception": "Geçersiz talep"
+  "validation_exception": "Geçersiz talep",
+  "username_null": "Kullanıcı adı boş olamaz",
+  "username_size": "Kullanıcı adı en az 4 en fazla 32 karakter olabilir",
+  "email_invalid": "Geçerli bir e-posta adresi olmalı",
+  "email_inuse": "E-posta adresi kullanılıyor"
 }

@@ -2,5 +2,9 @@
   "user_create_success": "User is created",
   "user_not_found_exception": "User not found",
   "invalid_id_exception": "Invalid Identifier",
-  "validation_exception": "Invalid Request Body"
+  "validation_exception": "Invalid Request Body",
+  "username_null": "Username cannot be null",
+  "username_size": "Username must have min 4 max 32 characters",
+  "email_invalid": "Must be a valid e-mail address",
+  "email_inuse": "Email in use"
 }

@@ -3,7 +3,7 @@ module.exports = (err, req, res, next) => {
   let validationErrors;
   if (errors) {
     validationErrors = {};
-    errors.forEach((error) => (validationErrors[error.param] = error.msg));
+    errors.forEach((error) => (validationErrors[error.param] = req.t(error.msg)));
   }
   res
     .status(status)
