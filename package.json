@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon index",
-    "start:prod": "cross-env NODE_ENV=production node index"
+    "start:prod": "cross-env NODE_ENV=production node index",
+    "start:staging": "cross-env NODE_ENV=staging node index"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "config": "^3.3.6",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "i18next": "^20.2.2",

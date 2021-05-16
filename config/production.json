@@ -1,0 +1,10 @@
+{
+  "database": {
+    "db": "production-db",
+    "username": "prod-user",
+    "password": "prod-pass",
+    "dialect": "sqlite",
+    "host": "./prod.sqlite",
+    "logging": false
+  }
+}
