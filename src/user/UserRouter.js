@@ -7,7 +7,7 @@ const idNumberControl = require('../shared/idNumberControl');
 const UserService = require('./UserService');
 const { body, validationResult } = require('express-validator');
 const ValidationException = require('../shared/ValidationException');
-const bcrypt = require('bcrypt');
+const basicAuthentication = require('../shared/basicAuthentication');
 
 router.post('/users', 
 body('username')
@@ -48,20 +48,9 @@ router.get('/users/:id', idNumberControl, async (req, res, next) => {
   }
 })
 
-router.put('/users/:id', idNumberControl, async (req, res) => {
-  const authorization = req.headers.authorization;
-  if(!authorization) {
-    return res.status(403).send({message: 'Forbidden'});
-  }
-  const encoded = authorization.substring(6);
-  const decoded = Buffer.from(encoded, 'base64').toString('ascii');
-  const [email, password] = decoded.split(':');
-  let authenticatedUser = await UserService.findByEmail(email);
+router.put('/users/:id', idNumberControl, basicAuthentication, async (req, res) => {
+  const authenticatedUser = req.authenticatedUser;
   if(!authenticatedUser) {
-    return res.status(403).send({message: 'Forbidden'});
-  }
-  const match = await bcrypt.compare(password, authenticatedUser.password);
-  if (!match) {
     return res.status(403).send({message: 'Forbidden'});
   }
 
@@ -76,8 +65,17 @@ router.put('/users/:id', idNumberControl, async (req, res) => {
   res.send('updated');
 })
 
-router.delete('/users/:id', idNumberControl, async (req, res) => {
+router.delete('/users/:id', idNumberControl, basicAuthentication, async (req, res) => {
+  const authenticatedUser = req.authenticatedUser;
+  if(!authenticatedUser) {
+    return res.status(403).send({message: 'Forbidden'});
+  }
+
   const id = req.params.id;
+  
+  if(authenticatedUser.id != id) {
+    return res.status(403).send({message: 'Forbidden'});
+  }
   await User.destroy({where: {id: id}});
   res.send('removed');
 })
