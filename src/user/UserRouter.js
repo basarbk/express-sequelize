@@ -66,6 +66,10 @@ router.put('/users/:id', idNumberControl, async (req, res) => {
   }
 
   const id = req.params.id;
+  
+  if(authenticatedUser.id != id) {
+    return res.status(403).send({message: 'Forbidden'});
+  }
   const user = await User.findOne({where: {id: id}});
   user.username = req.body.username;
   await user.save();
