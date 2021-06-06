@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Article = require('./Article');
 const pagination = require('../shared/pagination');
 const basicAuthentication = require('../shared/basicAuthentication');
+const User = require("../user/User");
 
 
 router.get('/articles', pagination, async (req, res) => {
@@ -9,7 +10,14 @@ router.get('/articles', pagination, async (req, res) => {
 
   const articleWithCount = await Article.findAndCountAll({
     limit: size,
-    offset: page * size
+    offset: page * size,
+    attributes: ['id', 'content'],
+    include: [ {
+      model: User,
+      as: "user",
+      attributes: ['id', 'username', 'email']
+    }
+    ]
   });
   res.send({
     content: articleWithCount.rows,
