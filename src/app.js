@@ -19,6 +19,7 @@ i18next
 
 
 const app = express();
+app.use("/uploads", express.static("./upload-dir"));
 app.use(middleware.handle(i18next));
 app.use(express.json());
 
