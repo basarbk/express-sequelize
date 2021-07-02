@@ -21,7 +21,8 @@
     "i18next-http-middleware": "^3.1.1",
     "multer": "^1.4.2",
     "sequelize": "^6.5.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

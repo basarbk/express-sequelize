@@ -1,6 +1,7 @@
 const sequelize = require('./src/config/database');
 const app = require('./src/app');
 const UserService = require('./src/user/UserService');
+const logger = require('./src/logger');
 
 if(process.env.NODE_ENV === 'production') {
   sequelize.sync();
@@ -18,5 +19,5 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("app is running in mode: ", process.env.NODE_ENV);
+  logger.info("app is running in mode: ", process.env.NODE_ENV)
 });
