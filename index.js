@@ -18,13 +18,6 @@ if(process.env.NODE_ENV === 'production') {
   });
 }
 
-logger.error('error');
-logger.warn('warn');
-logger.info('info');
-logger.verbose('verbose');
-logger.debug('debug');
-logger.silly('silly');
-
 app.listen(process.env.PORT || 3000, () => {
   logger.info("app is running in mode: ", process.env.NODE_ENV)
 });
